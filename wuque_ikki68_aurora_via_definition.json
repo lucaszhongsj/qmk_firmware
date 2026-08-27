@@ -232,6 +232,16 @@
       "name": "Apple Focus",
       "title": "Apple Focus Mode - Do Not Disturb",
       "shortName": "Focus"
+    },
+    {
+      "name": "Layer Win",
+      "title": "Set default layer to Windows mode, persist after replug",
+      "shortName": "Win"
+    },
+    {
+      "name": "Layer Mac",
+      "title": "Set default layer to Mac mode, persist after replug",
+      "shortName": "Mac"
     }
   ]
 }
