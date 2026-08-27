@@ -38,15 +38,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DEF_WIN:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(0);
+                rgblight_blink_layer_repeat(2, 200, 3);
             }
             return false;
         case DEF_MAC:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(1);
+                rgblight_blink_layer_repeat(2, 200, 3);
             }
             return false;
     }
     return true;
+}
+
+/* RGB 状态灯：20 颗底灯。层2 蓝(170) 与层3 暖橙(30) 冷暖分离，
+ * 色环对径对比最强，低亮度下仍可辨；提亮至 val 150 让色相真实呈现。
+ * 正序遍历后写覆盖先写，数组末尾（保存闪）优先级最高，不被 MO 层色遮蔽 */
+const rgblight_segment_t PROGMEM lk_fn[]    = RGBLIGHT_LAYER_SEGMENTS({0, 20, 170, 180, 150}); // 0: 层2 蓝
+const rgblight_segment_t PROGMEM lk_sys[]   = RGBLIGHT_LAYER_SEGMENTS({0, 20, 30, 200, 150});   // 1: 层3 暖橙
+const rgblight_segment_t PROGMEM lk_saved[] = RGBLIGHT_LAYER_SEGMENTS({0, 20, 85, 220, 180});   // 2: 保存确认闪 绿
+
+const rgblight_segment_t* const PROGMEM rgb_status_layers[] = RGBLIGHT_LAYERS_LIST(lk_fn, lk_sys, lk_saved);
+
+void keyboard_post_init_user(void) {
+    rgblight_layers = rgb_status_layers;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(0, layer_state_cmp(state, 2));
+    rgblight_set_layer_state(1, layer_state_cmp(state, 3));
+    return state;
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
