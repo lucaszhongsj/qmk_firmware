@@ -1,0 +1,28 @@
+name: Build release firmware
+
+on:
+  push:
+    branches: [release]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/qmk/qmk_cli
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Fix git safe directory in container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Build firmware
+        run: qmk compile -kb wuque/ikki68_aurora -km macos
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wuque_ikki68_aurora_macos
+          path: wuque_ikki68_aurora_macos.hex
