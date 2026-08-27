@@ -62,6 +62,9 @@ const rgblight_segment_t* const PROGMEM rgb_status_layers[] = RGBLIGHT_LAYERS_LI
 
 void keyboard_post_init_user(void) {
     rgblight_layers = rgb_status_layers;
+    // NKRO 状态存于 keymap_config（EEPROM magic 区），本版本无 FORCE_NKRO 机制，
+    // 开机直接设运行态（不写 EEPROM，避免磨损）
+    keymap_config.nkro = true;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
