@@ -23,6 +23,11 @@
             "aliases": [
                 "KC_GLOB"
             ]
+        },
+        "0x00C4": {
+            "group": "media",
+            "key": "KC_DND",
+            "label": "Apple Do Not Disturb"
         }
     }
 }
