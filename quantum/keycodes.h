@@ -295,6 +295,7 @@ enum qk_keycode_defines {
     KC_ASSISTANT = 0x00C0,
     KC_MISSION_CONTROL = 0x00C1,
     KC_LAUNCHPAD = 0x00C2,
+    KC_DND = 0x00C4,
     QK_MOUSE_CURSOR_UP = 0x00CD,
     QK_MOUSE_CURSOR_DOWN = 0x00CE,
     QK_MOUSE_CURSOR_LEFT = 0x00CF,
@@ -1504,7 +1505,8 @@ enum qk_keycode_defines {
 // Group Helpers
 #define IS_INTERNAL_KEYCODE(code) ((code) >= KC_NO && (code) <= KC_TRANSPARENT)
 #define IS_BASIC_KEYCODE(code) ((code) >= KC_A && (code) <= KC_EXSEL)
-#define IS_SYSTEM_KEYCODE(code) ((code) >= KC_SYSTEM_POWER && (code) <= KC_SYSTEM_WAKE)
+#define IS_SYSTEM_KEYCODE(code) (((code) >= KC_SYSTEM_POWER && (code) <= KC_SYSTEM_WAKE) || (code) == KC_DND)
+// IS_CONSUMER_KEYCODE 不包含 0x00C4：KC_DND 走 system 路径
 #define IS_CONSUMER_KEYCODE(code) ((code) >= KC_AUDIO_MUTE && (code) <= KC_LAUNCHPAD)
 #define IS_MOUSE_KEYCODE(code) ((code) >= QK_MOUSE_CURSOR_UP && (code) <= QK_MOUSE_ACCELERATION_2)
 #define IS_MODIFIER_KEYCODE(code) ((code) >= KC_LEFT_CTRL && (code) <= KC_RIGHT_GUI)

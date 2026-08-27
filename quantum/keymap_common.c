@@ -67,6 +67,8 @@ action_t action_for_keycode(uint16_t keycode) {
             break;
 #ifdef EXTRAKEY_ENABLE
         case SYSTEM_KEYCODE_RANGE:
+        // KC_DND 不在连续区间内，gcc case-range 覆盖不到，需显式分支
+        case KC_DND:
             action.code = ACTION_USAGE_SYSTEM(KEYCODE2SYSTEM(keycode));
             break;
         case CONSUMER_KEYCODE_RANGE:
